@@ -291,7 +291,7 @@ fragmentzip_t *fragmentzip_open_extended(const char *url, CURL *mcurl){
     }else{
         bzero(downloadRange, sizeof(downloadRange));
         dbuf->size_buf = info->internal.cd_end->cd_size + sizeof(fragmentzip_end_of_cd);
-        snprintf(downloadRange, sizeof(downloadRange), "%u-%lu",info->internal.cd_end->cd_start_offset, info->internal.cd_end->cd_start_offset+dbuf->size_buf-1);
+        snprintf(downloadRange, sizeof(downloadRange), "%u-%" PRIu64,info->internal.cd_end->cd_start_offset, (uint64_t)(info->internal.cd_end->cd_start_offset+dbuf->size_buf-1));
     }
     
     dbuf->size_downloaded = 0;
