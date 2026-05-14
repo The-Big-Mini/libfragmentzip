@@ -7,6 +7,7 @@
 //
 
 #define _POSIX_C_SOURCE 200809L
+#include <inttypes.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -52,7 +53,7 @@ static size_t downloadFunction(void* data, size_t size, size_t nmemb, t_download
 }
 
 STATIC_INLINE void fixEndian_local_file(fragentzip_local_file *lfile){
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         makeLE32(lfile->signature);
         makeLE16(lfile->version);
         makeLE16(lfile->flags);
@@ -68,7 +69,7 @@ STATIC_INLINE void fixEndian_local_file(fragentzip_local_file *lfile){
 }
 
 STATIC_INLINE void fixEndian_end_of_cd(fragmentzip_end_of_cd *cde){
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         makeLE32(cde->signature);
         makeLE16(cde->disk_cur_number);
         makeLE16(cde->disk_cd_start_number);
@@ -81,7 +82,7 @@ STATIC_INLINE void fixEndian_end_of_cd(fragmentzip_end_of_cd *cde){
 }
 
 STATIC_INLINE void fixEndian_end_of_cd64(fragmentzip64_end_of_cd *cde64){
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         makeLE32(cde64->signature);
         makeLE64(cde64->end_of_cd_size);
         makeLE16(cde64->version_made);
@@ -96,7 +97,7 @@ STATIC_INLINE void fixEndian_end_of_cd64(fragmentzip64_end_of_cd *cde64){
 }
 
 STATIC_INLINE void fixEndian_end_of_cd_locator64(fragmentzip64_end_of_cd_locator *cdle64){
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         makeLE32(cdle64->signature);
         makeLE32(cdle64->disk_cd_start_number);
         makeLE64(cdle64->end_of_cd_record_offset);
@@ -105,7 +106,7 @@ STATIC_INLINE void fixEndian_end_of_cd_locator64(fragmentzip64_end_of_cd_locator
 }
 
 STATIC_INLINE void fixEndian_extended_information_extra_field64(fragmentzip64_extended_information_extra_field *eief64){
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         makeLE16(eief64->field_tag);
         makeLE16(eief64->field_size);
     }
@@ -115,7 +116,7 @@ STATIC_INLINE int fixEndian_cd(fragmentzip_t *info){
     int err = 0;
     fragmentzip_cd *cd = info->cd;
     uint64_t entries = info->cd_entries;
-    if (isBigEndian(void)) {
+    if (isBigEndian()) {
         for (uint64_t i=0; i<entries; i++) {
             cassure((char*)cd-(char*)info->cd <= info->length-sizeof(fragmentzip_cd)); //sanity check
 

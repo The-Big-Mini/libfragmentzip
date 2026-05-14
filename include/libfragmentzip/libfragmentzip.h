@@ -149,7 +149,7 @@ STATIC_INLINE bool isBigEndian(void){
 }
 
 STATIC_INLINE void makeEndian(char * buf, unsigned int size, bool big){
-    if (isBigEndian(void) != big){
+    if (isBigEndian() != big){
         switch (size) {
             case 2:
                 buf[0] ^= buf[1];
