@@ -143,13 +143,13 @@ typedef struct fragmentzip_info{
 } fragmentzip_t;
 
 
-STATIC_INLINE bool isBigEndian(){
+STATIC_INLINE bool isBigEndian(void){
     static const uint32_t tst = 0x41424344;
     return (bool)__builtin_expect(((char*)&tst)[0] == 0x41,0);
 }
 
 STATIC_INLINE void makeEndian(char * buf, unsigned int size, bool big){
-    if (isBigEndian() != big){
+    if (isBigEndian(void) != big){
         switch (size) {
             case 2:
                 buf[0] ^= buf[1];
