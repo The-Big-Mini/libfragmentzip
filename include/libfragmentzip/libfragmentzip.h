@@ -37,10 +37,7 @@
 extern "C"
 {
 #else
-typedef enum{
-    false = 0,
-    true = 1
-}bool;
+#include <stdbool.h>
 #endif
 
 typedef struct{
